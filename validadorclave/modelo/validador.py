@@ -40,3 +40,23 @@ class ReglaValidacionGanimedes(ReglaValidacion):
         if not self.contiene_caracter_especial(clave):
             raise ValueError("ReglaValidacionGanimedes: La clave debe contener al menos un carácter especial")
         return True
+
+class ReglaValidacionCalisto(ReglaValidacion):
+    def __init__(self):
+        super().__init__(6)
+
+    def contiene_calisto(self, clave: str) -> bool:
+        palabra = "calisto"
+        if palabra not in clave.lower():
+            return False
+        letras_calisto = [c for c in clave if c.lower() in palabra]
+        return any(c.isupper() for c in letras_calisto) and not all(c.isupper() for c in letras_calisto)
+
+    def es_valida(self, clave: str) -> bool:
+        if not self._validar_longitud(clave):
+            raise ValueError("ReglaValidacionCalisto: La clave debe tener una longitud de más de 6 caracteres")
+        if not self._contiene_numero(clave):
+            raise ValueError("ReglaValidacionCalisto: La clave debe contener al menos un número")
+        if not self.contiene_calisto(clave):
+            raise ValueError("ReglaValidacionCalisto: La palabra calisto debe estar escrita con al menos dos letras en mayúscula, pero no todas")
+        return True
