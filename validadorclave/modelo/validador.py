@@ -68,4 +68,23 @@ class Validador:
     def es_valida(self, clave: str) -> bool:
         return self.regla.es_valida(clave)
 
+# Punto 3
+def validar_clave(clave: str, reglas: list[ReglaValidacion]):
+    errores = []
+    for regla in reglas:
+        try:
+            validador = Validador(regla)
+            validador.es_valida(clave)
+        except ValueError as error:
+            errores.append(str(error))
 
+    if not errores:
+        print("La clave es válida para todas las reglas")
+    else:
+        for e in errores:
+            print("Error:", e)
+
+if __name__ == "__main__":
+    clave = "cAlist0"
+    reglas = [ReglaValidacionGanimedes(), ReglaValidacionCalisto()]
+    validar_clave(clave, reglas)
